@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="style.css" media="screen"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+    
+<style>
+    body { 
+    margin: 0;
+    font-family: Verdana;
+    }
+</style>    
+
+<body>
+
+    
+    <div class="header">
+      <a href="index.html">Home</a>
+      <a href="ojprofile.html" class="active">OJ Profile</a>
+      <a href="skills.html">Skills</a>
+      <a href="upCommingContest.html">Upcomming Contest</a>
+    </div>
+    
+
+    <script>
+        let url = 'https://codeforces.com/api/user.info?handles=Adol';
+        var maxRating
+        fetch(url)
+        .then(res => res.json())
+        .then((out) => {
+            document.getElementById("maxRating").innerHTML = out.result[0].maxRating;
+            document.getElementById("currentRating").innerHTML = out.result[0].rating;
+        })
+        .catch(err => { throw err });
+
+    </script>
+
+
+    <script>
+        let urlP = 'https://codeforces.com/api/user.status?handle=Adol';
+        var sum=0
+        fetch(urlP)
+        .then(res => res.json())
+        .then((out) => {
+            var result = out.result
+            
+            for(var tmp in result)
+            {
+            	if(result[tmp].verdict=="OK") sum++
+            }
+            document.getElementById("totalSolved").innerHTML = sum;
+        })
+        .catch(err => { throw err });
+
+    </script>
+    
+    
+    <script>
+        let urlUva = 'https://uhunt.onlinejudge.org/api/subs-user/924876';
+        let mySet = new Set()
+        fetch(urlUva)
+        .then(res => res.json())
+        .then((out) => {
+            
+            document.getElementById("uvaUname").innerHTML = out.uname;
+            
+            var allSub = out.subs
+            for(var tmp in allSub)
+            {
+            	if(allSub[tmp][2]==90) mySet.add(allSub[tmp][1]);
+            }
+            
+            document.getElementById("totalSolvedUva").innerHTML = mySet.size;
+        })
+        .catch(err => { throw err });
+
+    </script>
+    
+    
+    <div class="bodyContent">
+        <div class="card">
+            <p class="judgeName">CodeForces</p>
+            <div class="judgeInfo">
+                
+                <p>Handle : <b><a href="https://codeforces.com/profile/Adol" style="text-decoration: none;color: blue">Adol</a></b></p>
+                <p>Max Rating : <b id="maxRating" style="color: Cyan"></b></p>
+                <p>Current Rating : <b id="currentRating" style="color: green"></b></p>
+                <p>Total Problems Solved : <b id="totalSolved"></b></p>
+            </div>
+        </div>
+        
+        <div class="card">
+            <p class="judgeName">CodeChef</p>
+            <div class="judgeInfo">
+                
+                <p>Handle : <b><a href="https://www.codechef.com/users/adol_3" style="text-decoration: none;color: blue">adol_3</a></b></p>
+                <p>Max Rating : <b style="color: #067d06">1523</b></p>
+                <p>Current Rating : <b style="color: #08a308">1489</b></p>
+            </div>
+        </div>
+        
+        <div class="card">
+            <p class="judgeName">AtCoder</p>
+            <div class="judgeInfo">
+                
+                <p>Handle : <b><a href="https://atcoder.jp/users/Aadol" style="text-decoration: none;color: blue">Aadol</a></b></p>
+                <p>Max Rating : <b style="color: gray">313</b></p>
+                <p>Current Rating : <b style="color: gray">313</b></p>
+            </div>
+        </div>
+        
+        
+        <div class="card">
+            <p class="judgeName">UVa</p>
+            <div class="judgeInfo">
+                
+                <p>Handle : <b><a href="https://onlinejudge.org/index.php?option=com_onlinejudge&Itemid=8&page=show_authorstats&userid=924876" id="uvaUname" style="text-decoration: none;color: blue"></a></b></p>
+                <p>Total Problems Solved : <b id="totalSolvedUva"></b></p>
+            </div>
+        </div>
+    
+    </div>
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="footer">
+        <div class="rightFooter">
+            <a href="https://www.facebook.com/AbdullahilBakiAdol/" class="fa fa-facebook"></a>
+            <a href="https://www.linkedin.com/in/adol/" class="fa fa-linkedin"></a>
+            <a href="https://github.com/BakiAdol" class="fa fa-github"></a>
+        </div>
+    </div>
+    
+
+</body>
+</html>

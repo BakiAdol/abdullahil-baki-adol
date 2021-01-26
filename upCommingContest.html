@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="style.css" media="screen"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+    
+<style>
+    body { 
+    margin: 0;
+    font-family: Verdana;
+    }
+</style>    
+
+<body>
+
+    
+    <div class="header">
+      <a href="index.html">Home</a>
+      <a href="ojprofile.html">OJ Profile</a>
+      <a href="skills.html">Skills</a>
+      <a href="upCommingContest.html" class="active">Upcomming Contest</a>
+    </div>
+    
+    <div class="bodyContent">
+        
+        
+        <script>
+            
+            
+        function dateParser(sec){
+            var date = new Date(sec * 1000);
+            return date.toLocaleString();
+        }
+            
+        function durationParser(sec){
+            const grans = [60, 60, 24];
+            const unit = ["sec(s)", "min(s)", "hour(s)", "day(s)"];
+            const resarr = [sec];
+            for (const gran of grans){
+                var elem = resarr.pop();
+                resarr.push(elem % gran);
+                resarr.push(Math.floor(elem / gran));
+            }
+            let res = "";
+            for (let i = 0; i < unit.length; i++){
+                if (resarr[i] == 0) continue;
+                res = `${resarr[i]} ${unit[i]},` + res;
+            }
+            if (res == "") res = "0 sec(s),";
+            return res.substr(0, res.length - 1);
+        }
+            
+            
+        let url = 'https://codeforces.com/api/contest.list?gym=false';
+        var maxRating
+        fetch(url)
+        .then(res => res.json())
+        .then((out) => {
+        
+            var allContest = document.getElementById("contest");
+            
+            for(var i=0;out.result[i].phase!="FINISHED";i++)
+            {
+                var row = `
+                <div class="contestRow">
+                <p class="contestName"><a href="" >${out.result[i].name}</a></p>
+                <P>Time : ${dateParser(out.result[i].startTimeSeconds)}, Duration : ${durationParser(out.result[i].durationSeconds)}</P>
+                </div>
+                `
+                allContest.innerHTML=row+allContest.innerHTML
+            }
+            
+        })
+        .catch(err => { throw err });
+
+</script>
+    
+    <div id="contest">
+    
+    </div>
+        
+        
+    </div>
+    
+    
+    
+    
+    <div class="footer">
+        <div class="rightFooter">
+            <a href="https://www.facebook.com/AbdullahilBakiAdol/" class="fa fa-facebook"></a>
+            <a href="https://www.linkedin.com/in/adol/" class="fa fa-linkedin"></a>
+            <a href="https://github.com/BakiAdol" class="fa fa-github"></a>
+        </div>
+    </div>
+
+</body>
+</html>
